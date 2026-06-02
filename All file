@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>تسجيل الدخول</title>
+
+<style>
+
+:root{
+    --bg:#0f172a;
+    --card:rgba(255,255,255,0.08);
+    --border:rgba(255,255,255,0.15);
+    --text:#ffffff;
+    --secondary:#cbd5e1;
+    --primary:#3b82f6;
+    --success:#22c55e;
+    --danger:#ef4444;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI,Tahoma,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+    radial-gradient(circle at top left,#2563eb,#0f172a 40%),
+    radial-gradient(circle at bottom right,#7c3aed,#0f172a 40%);
+    padding:20px;
+}
+
+.card{
+    width:100%;
+    max-width:420px;
+
+    background:var(--card);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid var(--border);
+
+    border-radius:24px;
+
+    padding:30px;
+
+    box-shadow:
+    0 8px 32px rgba(0,0,0,.35);
+}
+
+.logo{
+    width:80px;
+    height:80px;
+    margin:auto;
+    margin-bottom:15px;
+
+    border-radius:50%;
+
+    background:linear-gradient(
+    135deg,
+    #3b82f6,
+    #8b5cf6);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:white;
+    font-size:32px;
+    font-weight:bold;
+}
+
+h1{
+    color:white;
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    text-align:center;
+    color:var(--secondary);
+    margin-bottom:25px;
+}
+
+.input-box{
+    margin-bottom:18px;
+}
+
+.input-box label{
+    color:white;
+    display:block;
+    margin-bottom:8px;
+}
+
+.input-box input{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.05);
+    color:white;
+    outline:none;
+}
+
+.password-wrapper{
+    position:relative;
+}
+
+.toggle-password{
+    position:absolute;
+    left:15px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    color:#cbd5e1;
+}
+
+.options{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    color:white;
+    font-size:14px;
+}
+
+.options a{
+    color:#60a5fa;
+    text-decoration:none;
+}
+
+.login-btn{
+    width:100%;
+    border:none;
+    border-radius:12px;
+    padding:14px;
+    background:var(--primary);
+    color:white;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.login-btn:hover{
+    opacity:.9;
+}
+
+.google-btn{
+    width:100%;
+    margin-top:15px;
+    border:none;
+    border-radius:12px;
+    padding:14px;
+    background:white;
+    color:black;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.divider{
+    text-align:center;
+    margin:18px 0;
+    color:#cbd5e1;
+}
+
+.message{
+    text-align:center;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+.signup{
+    text-align:center;
+    margin-top:20px;
+    color:white;
+}
+
+.signup a{
+    color:#60a5fa;
+    text-decoration:none;
+}
+
+.loader{
+    display:none;
+    width:22px;
+    height:22px;
+    border:3px solid white;
+    border-top:3px solid transparent;
+    border-radius:50%;
+    margin:auto;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    100%{
+        transform:rotate(360deg);
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="logo">A</div>
+
+    <h1>مرحباً بعودتك</h1>
+
+    <p class="subtitle">
+        سجل الدخول للمتابعة
+    </p>
+
+    <form id="loginForm">
+
+        <div class="input-box">
+            <label>البريد الإلكتروني</label>
+
+            <input
+            type="email"
+            id="email"
+            placeholder="name@example.com"
+            required>
+        </div>
+
+        <div class="input-box">
+
+            <label>كلمة المرور</label>
+
+            <div class="password-wrapper">
+
+                <input
+                type="password"
+                id="password"
+                placeholder="********"
+                required>
+
+                <span
+                class="toggle-password"
+                onclick="togglePassword()">
+
+                👁
+
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="options">
+
+            <label>
+                <input type="checkbox">
+                تذكرني
+            </label>
+
+            <a href="#">
+                نسيت كلمة المرور؟
+            </a>
+
+        </div>
+
+        <button
+        class="login-btn"
+        type="submit">
+
+        تسجيل الدخول
+
+        </button>
+
+        <div class="divider">
+            أو
+        </div>
+
+        <button
+        class="google-btn"
+        type="button">
+
+        Google تسجيل الدخول بواسطة
+
+        </button>
+
+        <div
+        id="loader"
+        class="loader">
+        </div>
+
+        <div
+        id="message"
+        class="message">
+        </div>
+
+    </form>
+
+    <div class="signup">
+
+        لا تملك حساباً؟
+
+        <a href="#">
+            إنشاء حساب
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+function togglePassword(){
+
+    const password =
+    document.getElementById("password");
+
+    password.type =
+    password.type === "password"
+    ? "text"
+    : "password";
+}
+
+const form =
+document.getElementById("loginForm");
+
+form.addEventListener(
+"submit",
+function(e){
+
+    e.preventDefault();
+
+    const email =
+    document.getElementById("email").value;
+
+    const password =
+    document.getElementById("password").value;
+
+    const loader =
+    document.getElementById("loader");
+
+    const message =
+    document.getElementById("message");
+
+    loader.style.display = "block";
+
+    message.innerHTML = "";
+
+    setTimeout(()=>{
+
+        loader.style.display = "none";
+
+        if(
+        email === "admin@example.com"
+        &&
+        password === "12345678"
+        ){
+
+            message.style.color =
+            "#22c55e";
+
+            message.innerHTML =
+            "✓ تم تسجيل الدخول بنجاح";
+
+        }else{
+
+            message.style.color =
+            "#ef4444";
+
+            message.innerHTML =
+            "✗ البريد الإلكتروني أو كلمة المرور غير صحيحة";
+
+        }
+
+    },1500);
+
+});
+
+</script>
+
+</body>
+</html>
